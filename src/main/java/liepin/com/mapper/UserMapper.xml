@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="liepin.com.mapper.UserMapper">
+	<insert id="insertUser" parameterType="user">
+		insert into
+		user(name,sex,age,image) values(#{name},#{sex},#{age},#{image})
+	</insert>
+	<delete id="deleteUser" parameterType="user">
+		delete from user where uid
+		=#{uid}
+	</delete>
+	<update id="updateUser" parameterType="user">
+		update user set name
+		=#{name},sex=#{sex},age=#{age}
+		<if test="image!=null">
+	  			,image=#{image}
+	  	</if>
+	 where uid=#{uid}
+	</update>
+	<select id="selectAllUser" resultMap="userresult">
+		select * from user
+	</select>
+	<select id="selectUserCount" resultType="int">
+		select count(*) from user
+	</select>
+	<select id="selectUserByLimit" resultType="user"
+		parameterType="int">
+		select * from user limit #{num},3
+	</select>
+	<select id="selectUserByUid" resultType="user"
+		parameterType="int">
+		select * from user where uid = #{uid}
+	</select>
+
+	<!-- 定义外部的映射 -->
+	<resultMap id="userresult" type="user">
+		<id column="uid" property="uid" />
+		<result column="name" property="name"></result>
+		<result column="sex" property="sex"></result>
+		<result column="age" property="age"></result>
+		<result column="image" property="image"></result>
+	</resultMap>
+</mapper>
